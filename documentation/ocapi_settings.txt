@@ -1,0 +1,29 @@
+{
+    "_v": "20.4",
+    "clients": [
+        {
+            "allowed_origins": [
+                "https://development-web-client.demandware.net"
+            ],
+            "client_id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "resources": [
+                {
+                    "methods": [
+                        "post"
+                    ],
+                    "read_attributes": "(**)",
+                    "resource_id": "/log_requests/ecdn",
+                    "write_attributes": "(**)"
+                },
+                {
+                    "methods": [
+                        "get"
+                    ],
+                    "read_attributes": "(**)",
+                    "resource_id": "/log_requests/ecdn/{id}",
+                    "write_attributes": "(**)"
+                }
+            ]
+        }
+    ]
+}

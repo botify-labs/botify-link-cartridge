@@ -1,0 +1,289 @@
+{
+	"info": {
+		"_postman_id": "60bdf17a-bbfc-4fa2-b8b0-28c3bc5bec6b",
+		"name": "Botify",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "OAuth",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "0e9958b6-8adb-4caf-8167-9220d8aaa7b8",
+						"exec": [
+							"var data = JSON.parse(responseBody);",
+							"postman.setGlobalVariable(\"oauth_token\", data.access_token);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "{{client_pwd}}",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "{{client_id}}",
+							"type": "string"
+						},
+						{
+							"key": "saveHelperData",
+							"value": true,
+							"type": "boolean"
+						},
+						{
+							"key": "showPassword",
+							"value": false,
+							"type": "boolean"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded"
+					},
+					{
+						"key": "Origin",
+						"value": "{{env}}"
+					},
+					{
+						"key": "Authorization",
+						"value": "Basic",
+						"disabled": true
+					}
+				],
+				"url": {
+					"raw": "https://account.demandware.com/dw/oauth2/access_token?grant_type=client_credentials&client_id={{client_id}}",
+					"protocol": "https",
+					"host": [
+						"account",
+						"demandware",
+						"com"
+					],
+					"path": [
+						"dw",
+						"oauth2",
+						"access_token"
+					],
+					"query": [
+						{
+							"key": "grant_type",
+							"value": "client_credentials"
+						},
+						{
+							"key": "client_id",
+							"value": "{{client_id}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "RequestLogs",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "0045ca42-43b6-4178-87de-889d634fbc03",
+						"exec": [
+							"var data = JSON.parse(responseBody);",
+							"postman.setGlobalVariable(\"logRequestId\", data.id);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Origin",
+						"value": "https://{{env}}"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{oauth_token}}"
+					},
+					{
+						"key": "Origin",
+						"type": "text",
+						"value": "{{host}}",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"zone_name\": \"{{zone_name}}\",\n  \"start_time\": \"{{start_time}}\",\n  \"end_time\": \"{{end_time}}\"\n}",
+					"options": {
+						"raw": {}
+					}
+				},
+				"url": {
+					"raw": "https://{{env}}/s/-/dw/data/v20_4/log_requests/ecdn?client_id={{client_id}}",
+					"protocol": "https",
+					"host": [
+						"{{env}}"
+					],
+					"path": [
+						"s",
+						"-",
+						"dw",
+						"data",
+						"v20_4",
+						"log_requests",
+						"ecdn"
+					],
+					"query": [
+						{
+							"key": "client_id",
+							"value": "{{client_id}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "FetchLogs",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Origin",
+						"value": "https://{{env}}"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{oauth_token}}"
+					},
+					{
+						"key": "Origin",
+						"type": "text",
+						"value": "{{host}}",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {}
+					}
+				},
+				"url": {
+					"raw": "https://{{env}}/s/-/dw/data/v20_4/log_requests/ecdn/{{logRequestId}}?client_id={{client_id}}",
+					"protocol": "https",
+					"host": [
+						"{{env}}"
+					],
+					"path": [
+						"s",
+						"-",
+						"dw",
+						"data",
+						"v20_4",
+						"log_requests",
+						"ecdn",
+						"{{logRequestId}}"
+					],
+					"query": [
+						{
+							"key": "client_id",
+							"value": "{{client_id}}"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "343a8c43-adce-4165-bd86-9e9c1e3d12e4",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "995573f6-b6a3-4ae7-bca7-1651dcdc943d",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "ddf607c8-99bd-4686-ae60-5c176e3e3a7f",
+			"key": "env",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"id": "b409638d-2ecd-4aee-9d84-88d4ebd13cef",
+			"key": "client_id",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"id": "e58b7941-d7d5-46e8-8eb8-606d90d79679",
+			"key": "client_pwd",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"id": "27dd164a-27cd-43b4-84f5-7d54fba01f54",
+			"key": "zone_name",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"id": "c08b9014-5b5d-40c0-926f-c7011efca3a9",
+			"key": "start_time",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"id": "a26e0f6a-d4ef-4ad5-b7c1-776e37d6571e",
+			"key": "end_time",
+			"value": "",
+			"type": "string"
+		}
+	],
+	"protocolProfileBehavior": {}
+}
