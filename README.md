@@ -7,4 +7,4 @@ Version: 20.1.0
 
 Last Certification Date: August 12th, 2020
 
-Contact: Meryl Serouya (meryl@botify.com)
+Contact: Thomas Flechet (thomasf@botify.com)
